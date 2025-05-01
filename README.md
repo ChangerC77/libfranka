@@ -1,5 +1,5 @@
 # Reading Order (very important !):
-1. Hardware Setting.md (see in this repository)
+1. [Hardware Setting)](https://github.com/ChangerC77/libfranka/blob/fr3/Hardware%20Setting.md)
 2. [real-time kernal.md](https://github.com/ChangerC77/libfranka/blob/dev/real-time%20kernal.md)\
 Before you using `Franka FCI`, you `MUST` set up `real-time kernal` first, because `real-time kernal` will make sure that the rate of control reaches 1kHz without delay. see more details in `real-time kernal.md`
 
@@ -21,7 +21,41 @@ sudo apt-get update
 sudo apt-get install -y build-essential cmake git libpoco-dev libeigen3-dev libfmt-dev
 ```
 To use libfranka version `0.14.0` or later, you will need to install `pinocchio` and some more dependencies:
-
+### pinocchio
+1. eigen
+```
+sudo apt update
+sudo apt install libeigen3-dev
+```
+2. download
+```
+git clone --recursive https://github.com/stack-of-tasks/pinocchio
+cd pinocchio
+git checkout master
+mkdir build && cd build
+```
+3. build
+注意：因为我们需要的是`C++`库，所以不需要同时生成`Python`版本的编译文件所以在`Cmake`前，要修改`Pinocchio`中的`CmakeLists.txt`文件来关闭这个选项，将下面的`BUILD_PYTHON_INTERFACE`的`ON`改为`OFF`即可。
+如果一开始没有关闭`BUILD_PYTHON_INTERFACE`，会在编译时在里面`python`文件下面报错。
+```
+# --- OPTIONS ----------------------------------------
+OPTION(BUILD_BENCHMARK "Build the benchmarks" OFF)
+OPTION(BUILD_UTILS "Build the utils" OFF)
+OPTION(BUILD_PYTHON_INTERFACE "Build the Python bindings" ON)
+OPTION(BUILD_WITH_COMMIT_VERSION "Build libraries by setting specific commit version" OFF)
+```
+4. cmake
+```
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
+```
+5. make
+```
+make -j4
+```
+6. install
+```
+sudo make install
+```
 according to our `Robot/Gripper Server is 9`, so here we use `0.15.0` version, 
 
 <img src='img/5.png' width='70%'>
