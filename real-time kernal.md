@@ -178,8 +178,6 @@ scripts/kconfig/conf  --olddefconfig Kconfig
 # configuration written to .config
 #
 ```
-<img src='img/3.png'>
-
 output
 ```
   HDRINST usr/include/asm/fcntl.h
@@ -204,6 +202,14 @@ Afterwards, you are ready to compile the kernel. As this is a lengthy process, s
 ```
 make -j$(nproc) deb-pkg
 ```
+output
+<img src='img/3.png'>
+
+Finally, you are ready to install the newly created package. The exact names depend on your environment, but you are looking for headers and images packages without the dbg suffix. To install:
+```
+sudo IGNORE_PREEMPT_RT_PRESENCE=1 dpkg -i ../linux-headers-*.deb ../linux-image-*.deb
+```
+output
 ```
 正在选中未选择的软件包 linux-headers-5.9.1-rt20。
 (正在读取数据库 ... 系统当前共安装有 299857 个文件和目录。)
@@ -214,7 +220,7 @@ make -j$(nproc) deb-pkg
 正在解压 linux-image-5.9.1-rt20 (5.9.1-rt20-1) ...
 正在设置 linux-headers-5.9.1-rt20 (5.9.1-rt20-1) ...
 正在设置 linux-image-5.9.1-rt20 (5.9.1-rt20-1) ...
- * dkms: running auto installation service for kernel 5.9.1-rt20                                                                                                                                    [ OK ] 
+* dkms: running auto installation service for kernel 5.9.1-rt20                                                                                                                                    [ OK ] 
 update-initramfs: Generating /boot/initrd.img-5.9.1-rt20
 Sourcing file `/etc/default/grub'
 Sourcing file `/etc/default/grub.d/init-select.cfg'
@@ -229,11 +235,6 @@ Sourcing file `/etc/default/grub.d/init-select.cfg'
 Adding boot menu entry for UEFI Firmware Settings
 完成
 ```
-Finally, you are ready to install the newly created package. The exact names depend on your environment, but you are looking for headers and images packages without the dbg suffix. To install:
-```
-sudo IGNORE_PREEMPT_RT_PRESENCE=1 dpkg -i ../linux-headers-*.deb ../linux-image-*.deb
-```
-output
 <img src='img/4.png'>
 
 ## 6. Verifying the new kernel

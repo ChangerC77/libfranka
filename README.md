@@ -1,5 +1,11 @@
-# ATTENTION 
+# Reading Order (very important !):
+1. Hardware Setting.md (see in this repository)
+2. [real-time kernal.md](https://github.com/ChangerC77/libfranka/blob/dev/real-time%20kernal.md)\
 Before you using `Franka FCI`, you `MUST` set up `real-time kernal` first, because `real-time kernal` will make sure that the rate of control reaches 1kHz without delay. see more details in `real-time kernal.md`
+
+3. libfranka.md (current markdown)
+4. [franka-interface](https://github.com/ChangerC77/franka-interface)
+5. [frankapy](https://github.com/ChangerC77/frankapy)
 
 # libfranka
 ## official reference: 
