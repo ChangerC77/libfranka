@@ -304,3 +304,18 @@ add contents below to the conf文件
 ```
 The limits will be applied after you log out and in again.
 > 在执行第3步 如果还是没有切换，则需要重启，在开启选择系统的时候进入ubuntu advanced中，选择内核版本
+
+## 网卡bug
+在切换到实时内核后，可能会出现网卡无法识别的情况
+`ip link` 没有显示以太网接口（如 `eth0 / enpXsY`）
+但 `lspci` 能识别出有线网卡：`Realtek 8126 [10ec:8126]`
+## solution
+```
+# 重新下载驱动并绑定
+chmod +x autorun.sh
+sudo ./autorun.sh
+lsmod | grep r8125
+echo r8125 | sudo tee /sys/bus/pci/devices/0000:82:00.0/driver_override
+sudo rmmod r8125
+sudo modprobe r8125
+```
