@@ -1,12 +1,14 @@
-# real-time kernel
+# real-time kernel (ubuntu 20.04)
 official reference: https://frankaemika.github.io/docs/installation_linux.html#setting-up-the-real-time-kernel
 
 In order to control your robot using libfranka, the controller program on the workstation PC must run with real-time priority under a PREEMPT_RT kernel. This section describes the procedure of patching a kernel to support PREEMPT_RT and creating an installation package.
 > 为了使用 libfranka 控制您的机器人，工作站 PC 上的控制器程序必须在 PREEMPT_RT 内核下以实时优先级运行。本节介绍了修补内核以支持 PREEMPT_RT 并创建安装包的过程。
 
 ## NVIDIA Drivers
-NVIDIA drivers are not officially supported on PREEMPT_RT kernels, but the installation might work anyway by passing the environment variable IGNORE_PREEMPT_RT_PRESENCE=1 to the installation command.
-> NVIDIA 驱动程序不受 PREEMPT_RT 内核的官方支持，但通过将环境变量 IGNORE_PREEMPT_RT_PRESENCE=1 传递给安装命令，安装仍可能有效。
+这里实时内核版本要和电脑内核版本对应，如果需要安装`cuda`，首先要在电脑版本中安装，而后在安装一样的实时内核版本，目前亲测`5.15`有效。
+
+NVIDIA drivers are not officially supported on PREEMPT_RT kernels, but the installation might work anyway by passing the environment variable `IGNORE_PREEMPT_RT_PRESENCE=1` to the installation command.
+> NVIDIA 驱动程序不受 PREEMPT_RT 内核的官方支持，但通过将环境变量 `IGNORE_PREEMPT_RT_PRESENCE=1` 传递给安装命令，安装仍可能有效。
 
 ## 1. software update
 ```
@@ -32,13 +34,13 @@ output
 ```
 5.15.0-124-generic
 ```
-### ubuntu 20.04
-install kernel according to the version. Our version is `5.15.0`, so choose to install `5.9.1`
+### 5.15
+如果使用的较新的CPU，并要使用`cuda`，一定安装最新的`5.15`的版本：
+
+### 5.9
+如果是比较23年前的电脑，建议安装`5.9`的版本, so choose to install `5.9.1`
 ```
 mkdir ~/Franka && cd Franka
-```
-根据版本选择接近`5.15的`版本安装：
-```
 curl -LO https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.9.1.tar.xz
 curl -LO https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.9.1.tar.sign
 curl -LO https://www.kernel.org/pub/linux/kernel/projects/rt/5.9/patch-5.9.1-rt20.patch.xz

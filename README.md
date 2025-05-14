@@ -1,5 +1,5 @@
-# Reading Order (very important !):
-1. [Hardware Setting)](https://github.com/ChangerC77/libfranka/blob/fr3/Hardware%20Setting.md)
+# Reading Order (very important !!!)
+1. [Hardware Setting](https://github.com/ChangerC77/libfranka/blob/fr3/Hardware%20Setting.md)
 2. [real-time kernal.md](https://github.com/ChangerC77/libfranka/blob/dev/real-time%20kernal.md)\
 Before you using `Franka FCI`, you `MUST` set up `real-time kernal` first, because `real-time kernal` will make sure that the rate of control reaches 1kHz without delay. see more details in `real-time kernal.md`
 
