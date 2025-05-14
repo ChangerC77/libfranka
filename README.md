@@ -85,7 +85,7 @@ sudo apt-get remove "*libfranka*"
 You can clone the repository and choose the version you need by selecting a specific tag:
 ```
 cd ~/Franka
-git clone --recurse-submodules https://github.com/frankaemika/libfranka.git
+git clone --recurse-submodules https://github.com/ChangerC77/libfranka.git
 cd libfranka
 ```
 List available tags

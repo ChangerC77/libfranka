@@ -35,10 +35,10 @@ output
 5.15.0-124-generic
 ```
 ### 5.15
-如果使用的较新的CPU，并要使用`cuda`，一定安装最新的`5.15`的版本：
+如果内核版本是`5.15`，并要使用`cuda`，一定安装最新的`5.15`的版本：[realtime-kernal 5.15](https://github.com/ChangerC77/libfranka/blob/fr3/5.15.md)
 
 ### 5.9
-如果是比较23年前的电脑，建议安装`5.9`的版本, so choose to install `5.9.1`
+如果内核版本是`5.15`，不过是21年前的电脑，且不用`cuda`，可以安装`5.9`的版本, so choose to install `5.9.1`
 ```
 mkdir ~/Franka && cd Franka
 curl -LO https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.9.1.tar.xz
