@@ -34,8 +34,11 @@ output
 ```
 5.15.0-124-generic
 ```
+### download real-time kernel
+if you download failed, you can directly use the realses
+
 ### 5.15 (recommanded)
-如果内核版本是`5.15`，并要使用`cuda`，一定安装最新的`5.15`的版本
+如果内核版本是`5.15`，并要使用`cuda`，一定安装和系统版本对应的`5.15`的版本
 ```
 mkdir ~/Franka && cd Franka
 curl -LO https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.179.tar.xz

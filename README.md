@@ -15,20 +15,19 @@ https://frankaemika.github.io/docs/libfranka.html
 ## API:
 https://frankaemika.github.io/libfranka/0.15.0/
 
-## 1. Installing dependencies
-```
-sudo apt-get update
-sudo apt-get install -y build-essential cmake git libpoco-dev libeigen3-dev libfmt-dev
-```
-To use libfranka version `0.14.0` or later, you will need to install `pinocchio` and some more dependencies:
-
-### system version: 
+## system requirement
 according to our `Robot/Gripper Server is 9`, so here we use `0.15.0` version, 
 
 <img src='img/5.png' width='70%'>
 
 `ubuntu20.04(noetic), franka_ros(0.10.0), libfranka (0.15.0)`
 
+## 1. Installing dependencies
+```
+sudo apt-get update
+sudo apt-get install -y build-essential cmake git libpoco-dev libeigen3-dev libfmt-dev
+```
+To use libfranka version `0.14.0` or later, you will need to install `pinocchio` and some more dependencies:
 ```
 sudo apt-get install -y lsb-release curl
 sudo mkdir -p /etc/apt/keyrings
@@ -61,7 +60,7 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/robotpkg.asc] http://robotpkg.
 sudo apt-get update
 sudo apt-get install -y robotpkg-pinocchio
 ```
-if you install `pinocchio` failed, you can follow this tutorials `pinocchio`
+if you install `pinocchio` failed, you can follow this tutorials [pinocchio](https://github.com/ChangerC77/libfranka/blob/fr3/pinocchio.md)
 
 
 ## 2. Building and Installation from Source
