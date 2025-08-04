@@ -1,7 +1,7 @@
 # Reading Order (very important !!!)
 1. [Hardware Setting](https://github.com/ChangerC77/libfranka/blob/fr3/Hardware%20Setting.md)
-2. [real-time kernal.md](https://github.com/ChangerC77/libfranka/blob/dev/real-time%20kernal.md)\
-Before you using `Franka FCI`, you `MUST` set up `real-time kernal` first, because `real-time kernal` will make sure that the rate of control reaches 1kHz without delay. see more details in `real-time kernal.md`
+2. [real-time kernal](https://github.com/ChangerC77/libfranka/blob/dev/real-time%20kernal.md)
+> Before you using `Franka FCI`, you `MUST` set up `real-time kernal` first, because `real-time kernal` will make sure that the rate of control reaches 1kHz without delay. see more details in `real-time kernal.md`
 
 3. libfranka.md (current markdown)
 4. [franka-interface](https://github.com/ChangerC77/franka-interface)
@@ -21,52 +21,37 @@ sudo apt-get update
 sudo apt-get install -y build-essential cmake git libpoco-dev libeigen3-dev libfmt-dev
 ```
 To use libfranka version `0.14.0` or later, you will need to install `pinocchio` and some more dependencies:
-### pinocchio
-1. eigen
-```
-sudo apt update
-sudo apt install libeigen3-dev
-```
-2. download
-```
-git clone --recursive https://github.com/stack-of-tasks/pinocchio
-cd pinocchio
-git checkout master
-mkdir build && cd build
-```
-3. build
-注意：因为我们需要的是`C++`库，所以不需要同时生成`Python`版本的编译文件所以在`Cmake`前，要修改`Pinocchio`中的`CmakeLists.txt`文件来关闭这个选项，将下面的`BUILD_PYTHON_INTERFACE`的`ON`改为`OFF`即可。
-如果一开始没有关闭`BUILD_PYTHON_INTERFACE`，会在编译时在里面`python`文件下面报错。
-```
-# --- OPTIONS ----------------------------------------
-OPTION(BUILD_BENCHMARK "Build the benchmarks" OFF)
-OPTION(BUILD_UTILS "Build the utils" OFF)
-OPTION(BUILD_PYTHON_INTERFACE "Build the Python bindings" ON)
-OPTION(BUILD_WITH_COMMIT_VERSION "Build libraries by setting specific commit version" OFF)
-```
-4. cmake
-```
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
-```
-5. make
-```
-make -j4
-```
-6. install
-```
-sudo make install
-```
+
+### system version: 
 according to our `Robot/Gripper Server is 9`, so here we use `0.15.0` version, 
 
 <img src='img/5.png' width='70%'>
 
-### our system version: 
 `ubuntu20.04(noetic), franka_ros(0.10.0), libfranka (0.15.0)`
 
 ```
 sudo apt-get install -y lsb-release curl
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL http://robotpkg.openrobots.org/packages/debian/robotpkg.asc | sudo tee /etc/apt/keyrings/robotpkg.asc
+```
+output
+```
+正在读取软件包列表... 完成
+正在分析软件包的依赖关系树       
+正在读取状态信息... 完成       
+lsb-release 已经是最新版 (11.1.0ubuntu2)。
+curl 已经是最新版 (7.68.0-1ubuntu2.25)。
+下列软件包是自动安装的并且现在不需要了：
+  gir1.2-goa-1.0 libfwupdplugin1 libncurses5 libtinfo5 libxmlb1
+  linux-headers-5.11.0-27-generic linux-hwe-5.11-headers-5.11.0-27
+  linux-image-5.11.0-27-generic linux-modules-5.11.0-27-generic
+  linux-modules-extra-5.11.0-27-generic
+使用'sudo apt autoremove'来卸载它(它们)。
+升级了 0 个软件包，新安装了 0 个软件包，要卸载 0 个软件包，有 2 个软件包未被升级。
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+...
+-----END PGP PUBLIC KEY BLOCK-----
 ```
 then
 ```
@@ -76,10 +61,38 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/robotpkg.asc] http://robotpkg.
 sudo apt-get update
 sudo apt-get install -y robotpkg-pinocchio
 ```
+if you install `pinocchio` failed, you can follow this tutorials `pinocchio`
+
+
 ## 2. Building and Installation from Source
 Before building and installing from source, please uninstall existing installations of libfranka to avoid conflicts:
 ```
 sudo apt-get remove "*libfranka*"
+```
+output
+```
+正在读取软件包列表... 完成
+正在分析软件包的依赖关系树       
+正在读取状态信息... 完成       
+注意，根据Glob '*libfranka*' 选中了 'robotpkg-libfranka'
+注意，根据Glob '*libfranka*' 选中了 'ros-foxy-libfranka-dbgsym'
+注意，根据Glob '*libfranka*' 选中了 'robotpkg-libfranka+doc'
+注意，根据Glob '*libfranka*' 选中了 'ros-foxy-libfranka'
+注意，根据Glob '*libfranka*' 选中了 'ros-noetic-libfranka'
+注意，根据Glob '*libfranka*' 选中了 'ros-noetic-libfranka-dbgsym'
+软件包 robotpkg-libfranka+doc 未安装，所以不会被卸载
+软件包 robotpkg-libfranka 未安装，所以不会被卸载
+软件包 ros-noetic-libfranka 未安装，所以不会被卸载
+软件包 ros-noetic-libfranka-dbgsym 未安装，所以不会被卸载
+软件包 ros-foxy-libfranka 未安装，所以不会被卸载
+软件包 ros-foxy-libfranka-dbgsym 未安装，所以不会被卸载
+下列软件包是自动安装的并且现在不需要了：
+  gir1.2-goa-1.0 libfwupdplugin1 libncurses5 libtinfo5 libxmlb1
+  linux-headers-5.11.0-27-generic linux-hwe-5.11-headers-5.11.0-27
+  linux-image-5.11.0-27-generic linux-modules-5.11.0-27-generic
+  linux-modules-extra-5.11.0-27-generic
+使用'sudo apt autoremove'来卸载它(它们)。
+升级了 0 个软件包，新安装了 0 个软件包，要卸载 0 个软件包，有 2 个软件包未被升级。
 ```
 ### Clone the Repository
 You can clone the repository and choose the version you need by selecting a specific tag:
@@ -92,9 +105,9 @@ List available tags
 ```
 git tag -l
 ```
-Checkout a specific tag (e.g., `0.15.0`)
+Checkout a specific tag (e.g., `fr3 = 0.15.0`)
 ```
-git checkout 0.15.0
+git checkout fr3
 ```
 update submodules
 ```
@@ -110,10 +123,33 @@ Configure the project and build
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/opt/openrobots/lib/cmake -DBUILD_TESTS=OFF ..
 make
 ```
+output
+```
+[ 92%] Linking CXX executable motion_with_control_external_control_loop
+[ 92%] Built target motion_with_control_external_control_loop
+[ 93%] Building CXX object examples/CMakeFiles/print_joint_poses.dir/print_joint_poses.cpp.o
+[ 94%] Linking CXX executable print_joint_poses
+[ 94%] Built target print_joint_poses
+[ 96%] Building CXX object examples/CMakeFiles/vacuum_object.dir/vacuum_object.cpp.o
+[ 97%] Linking CXX executable vacuum_object
+[ 97%] Built target vacuum_object
+[ 98%] Building CXX object examples/utility_examples/CMakeFiles/logging_example.dir/logging_example.cpp.o
+[100%] Linking CXX executable logging_example
+[100%] Built target logging_example
+```
 ### Installing libfranka as a Debian Package (Optional but recommended)
 Building a Debian package is optional but recommended for easier installation and management. In the build folder, execute:
 ```
 cpack -G DEB
+```
+output
+```
+CPack: Create package using DEB
+CPack: Install projects
+CPack: - Run preinstall target for: libfranka
+CPack: - Install project: libfranka []
+CPack: Create package
+CPack: - package: /home/tars/Franka/libfranka/build/libfranka-0.15.0-x86_64.deb generated.
 ```
 This command creates a Debian package named libfranka--.deb. You can then install it with:
 ```
@@ -209,4 +245,24 @@ cd ~/Franka/libfranka/build/examples
 ### 夹爪控制
 ```
 ./grasp_object 192.168.1.10 1 0.01
+```
+
+### bug
+可能会报错：
+```
+libfranka: unable to set realtime scheduling: Operation not permitted
+```
+这时控制要进入root模式
+```
+sudo passwd root
+```
+output
+```
+新的 密码： 
+重新输入新的 密码： 
+passwd：已成功更新密码
+```
+then, step in `su`
+```
+su
 ```

@@ -34,10 +34,31 @@ output
 ```
 5.15.0-124-generic
 ```
-### 5.15
-如果内核版本是`5.15`，并要使用`cuda`，一定安装最新的`5.15`的版本：[realtime-kernal 5.15](https://github.com/ChangerC77/libfranka/blob/fr3/5.15.md)
-
-### 5.9
+### 5.15 (recommanded)
+如果内核版本是`5.15`，并要使用`cuda`，一定安装最新的`5.15`的版本
+```
+mkdir ~/Franka && cd Franka
+curl -LO https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.179.tar.xz
+curl -LO https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.179.tar.sign
+curl -LO https://www.kernel.org/pub/linux/kernel/projects/rt/5.15/older/patch-5.15.179-rt84.patch.xz
+curl -LO https://www.kernel.org/pub/linux/kernel/projects/rt/5.15/older/patch-5.15.179-rt84.patch.sign
+```
+output
+```
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  120M  100  120M    0     0  4093k      0  0:00:30  0:00:30 --:--:-- 5250k
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   993  100   993    0     0   3559      0 --:--:-- --:--:-- --:--:--  3559
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 80596  100 80596    0     0  93934      0 --:--:-- --:--:-- --:--:-- 93825
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   833  100   833    0     0   3947      0 --:--:-- --:--:-- --:--:--  3947
+```
+### 5.9.1
 如果内核版本是`5.15`，不过是21年前的电脑，且不用`cuda`，可以安装`5.9`的版本, so choose to install `5.9.1`
 ```
 mkdir ~/Franka && cd Franka
@@ -46,11 +67,30 @@ curl -LO https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.9.1.tar.sign
 curl -LO https://www.kernel.org/pub/linux/kernel/projects/rt/5.9/patch-5.9.1-rt20.patch.xz
 curl -LO https://www.kernel.org/pub/linux/kernel/projects/rt/5.9/patch-5.9.1-rt20.patch.sign
 ```
+output
+```
+curl -LO https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.9.1.tar.sign
+curl -LO https://www.kernel.org/pub/linux/kernel/projects/rt/5.9/patch-5.9.1-rt20.patch.xz
+curl -LO https://www.kernel.org/pub/linux/kernel/projects/rt/5.9/patch-5.9.1-rt20.patch.sign
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  110M  100  110M    0     0  4313k      0  0:00:26  0:00:26 --:--:-- 5177k
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   987  100   987    0     0   1958      0 --:--:-- --:--:-- --:--:--  1958
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  158k  100  158k    0     0   141k      0  0:00:01  0:00:01 --:--:--  141k
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   438  100   438    0     0    528      0 --:--:-- --:--:-- --:--:--   528
+```
+
+## 4. Verifying file integrity\
 And decompress them with:
 ```
 xz -d *.xz
 ```
-## 4. Verifying file integrity
 The `.sign` files can be used to verify that the downloaded files were not corrupted or tampered with. The steps shown here are adapted from the Linux Kernel Archive , see the linked page for more details about the process.
 
 ``This step is optional but recommended!``
@@ -61,6 +101,9 @@ gpg2 --verify linux-*.tar.sign
 gpg2 --verify patch-*.patch.sign
 ```
 If your output is similar to the following:
+
+<img src='img/47.png'>
+
 ```
 gpg2 --verify patch-*.patch.sign
 gpg: 假定被签名的数据在‘linux-5.9.1.tar’
@@ -102,6 +145,9 @@ Note that keys for other kernel version might have different IDs, you will have 
 Having downloaded the keys, you can now verify the sources. Here is an example of a correct output:
 请注意，其他内核版本的密钥可能具有不同的 ID，您必须相应地进行调整。
 下载密钥后，您现在可以验证源代码。以下是正确输出的示例：
+
+<img src='img/48.png'>
+
 ```
 gpg2 --verify patch-*.patch.sign
 gpg: 假定被签名的数据在‘linux-5.9.1.tar’
@@ -131,15 +177,53 @@ tar xf linux-*.tar
 cd linux-*/
 patch -p1 < ../patch-*.patch
 ```
+output
+```
+...
+patching file mm/Kconfig
+patching file mm/highmem.c
+patching file mm/memcontrol.c
+patching file mm/page_alloc.c
+patching file mm/shmem.c
+patching file mm/slab.c
+patching file mm/slab.h
+patching file mm/slub.c
+patching file mm/swap.c
+patching file mm/vmalloc.c
+patching file mm/vmstat.c
+patching file mm/workingset.c
+patching file mm/zsmalloc.c
+patching file mm/zswap.c
+patching file net/Kconfig
+patching file net/core/dev.c
+patching file net/core/gen_estimator.c
+patching file net/core/gen_stats.c
+patching file net/core/sock.c
+patching file net/ipv4/inet_hashtables.c
+patching file net/ipv6/inet6_hashtables.c
+patching file net/sched/sch_api.c
+patching file net/sched/sch_generic.c
+patching file net/sunrpc/svc_xprt.c
+patching file net/xfrm/xfrm_state.c
+patching file scripts/gdb/linux/dmesg.py
+patching file scripts/gdb/linux/utils.py
+```
 Next copy your currently booted kernel configuration as the default config for the new real time kernel:
 ```
 cp -v /boot/config-$(uname -r) .config
 ```
 <img src='img/2.png'>
 
-Exclude the debug information from the kernel files to save space:
+output
 ```
-cd ~/Franka/linux-5.9.1/
+'/boot/config-5.15.0-139-generic' -> '.config'
+```
+Exclude the debug information from the kernel files to save space:
+
+choose your verison
+```
+cd ~/Franka/linux-5.9.1/ # 5.9.1
+cd ~/Franka/linux_5.15.179/ # 5.15.179
 ```
 ```
 scripts/config --disable DEBUG_INFO
@@ -180,7 +264,14 @@ scripts/kconfig/conf  --olddefconfig Kconfig
 # configuration written to .config
 #
 ```
+Afterwards, you are ready to compile the kernel. As this is a lengthy process, set the multithreading option -j to the number of your CPU cores:
+```
+make -j$(nproc) deb-pkg
+```
 output
+
+<img src='img/3.png'>
+
 ```
   HDRINST usr/include/asm/fcntl.h
   HDRINST usr/include/asm/unistd_32.h
@@ -200,18 +291,14 @@ dpkg-genchanges: info: 上传数据中包含完整的原始代码
  dpkg-source -i.git --after-build .
 dpkg-buildpackage: info: 完整上载（包含原始的代码）
 ```
-Afterwards, you are ready to compile the kernel. As this is a lengthy process, set the multithreading option -j to the number of your CPU cores:
-```
-make -j$(nproc) deb-pkg
-```
-output
-<img src='img/3.png'>
-
 Finally, you are ready to install the newly created package. The exact names depend on your environment, but you are looking for headers and images packages without the dbg suffix. To install:
 ```
 sudo IGNORE_PREEMPT_RT_PRESENCE=1 dpkg -i ../linux-headers-*.deb ../linux-image-*.deb
 ```
 output
+
+<img src='img/4.png'>
+
 ```
 正在选中未选择的软件包 linux-headers-5.9.1-rt20。
 (正在读取数据库 ... 系统当前共安装有 299857 个文件和目录。)
@@ -237,7 +324,7 @@ Sourcing file `/etc/default/grub.d/init-select.cfg'
 Adding boot menu entry for UEFI Firmware Settings
 完成
 ```
-<img src='img/4.png'>
+
 
 ## 6. Verifying the new kernel
 Restart your system. The Grub boot menu should now allow you to choose your newly installed kernel. To see which one is currently being used, see the output of the uname -a command. It should contain the string PREEMPT RT and the version number you chose. Additionally, `/sys/kernel/realtime` should exist and contain the the number `1`.
@@ -256,7 +343,7 @@ output
 ```
 Linux 5.9.1-rt20 x86_64
 ```
-grub setting
+### grub setting
 如果不显示这个，则说明需要设置grub文件
 ```
 sudo gedit /etc/default/grub
@@ -275,6 +362,21 @@ GRUB_DEFAULT=saved
 save and close gedit, then update the configuration
 ```
 sudo update-grub
+```
+output
+```
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/init-select.cfg'
+正在生成 grub 配置文件 ...
+找到 Linux 镜像：/boot/vmlinuz-5.15.0-139-generic
+找到 initrd 镜像：/boot/initrd.img-5.15.0-139-generic
+找到 Linux 镜像：/boot/vmlinuz-5.11.0-27-generic
+找到 initrd 镜像：/boot/initrd.img-5.11.0-27-generic
+找到 Linux 镜像：/boot/vmlinuz-5.9.1-rt20
+找到 initrd 镜像：/boot/initrd.img-5.9.1-rt20
+找到 Ubuntu 22.04.5 LTS (22.04) 位于 /dev/nvme0n1p2
+Adding boot menu entry for UEFI Firmware Settings
+完成
 ```
 开机的时候，选择`ubuntu advanced option`，然后找到对应的`5.9.1-rt20`的内核，后面开机默认会自动选择这个内核
 ## 7. Allow a user to set real-time permissions for its processes
