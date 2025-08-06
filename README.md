@@ -1,6 +1,7 @@
 # Reading Order (very important !!!)
 1. [Hardware Setting](https://github.com/ChangerC77/libfranka/blob/fr3/Hardware%20Setting.md)
-2. [real-time kernal](https://github.com/ChangerC77/libfranka/blob/dev/real-time%20kernal.md)
+2. NVIDIA-Drivers (if you need cuda, you must first install NVIDIA-Drivers specific version `NVIDIA-Linux-x86_64-535.183.01.run`)
+2. [real-time kernal](https://github.com/ChangerC77/libfranka/blob/fr3/real-time%20kernal.md)
 > Before you using `Franka FCI`, you `MUST` set up `real-time kernal` first, because `real-time kernal` will make sure that the rate of control reaches 1kHz without delay. see more details in `real-time kernal.md`
 
 3. libfranka.md (current markdown)
@@ -21,8 +22,39 @@ according to our `Robot/Gripper Server is 9`, so here we use `0.15.0` version,
 <img src='img/5.png' width='70%'>
 
 `ubuntu20.04(noetic), franka_ros(0.10.0), libfranka (0.15.0)`
+## Conda
+```
+conda create -n franka python=3.8
+conda activate franka
+```
+set `franka` conda environment as default
++ zsh
+```
+sudo vim ~/.zshrc
+```
++ bash
+```
+sudo vim ~/.bashrc
+```
+add the command
+```
+conda activate franka
+```
+then source the environment
++ zsh
+```
+source ~/.zshrc
+```
++ bash
+```
+source ~/.bashrc
+```
+
 
 ## 1. Installing dependencies
+```
+pip install numpy scipy
+```
 ```
 sudo apt-get update
 sudo apt-get install -y build-essential cmake git libpoco-dev libeigen3-dev libfmt-dev
@@ -60,7 +92,8 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/robotpkg.asc] http://robotpkg.
 sudo apt-get update
 sudo apt-get install -y robotpkg-pinocchio
 ```
-if you install `pinocchio` failed, you can follow this tutorials [pinocchio](https://github.com/ChangerC77/libfranka/blob/fr3/pinocchio.md)
+### pinocchio
+then you should follow this tutorial to install [pinocchio](https://github.com/ChangerC77/libfranka/blob/fr3/pinocchio.md)
 
 
 ## 2. Building and Installation from Source
@@ -158,8 +191,9 @@ sudo dpkg -i libfranka*.deb
 
 Installing via a Debian package simplifies the process compared to building from source every time. Additionally the package integrates better with system tools and package managers, which can help manage updates and dependencies more effectively.
 
-## 3. connect
-首先用网线连接机械臂底座和电脑，然后通过连接机械臂底座进入Desk设置控制器的ip地址
+## 3. DESK
+### 1. network connection
+首先用网线连接`机械臂底座`和`电脑`
 
 `ATTENTION`: 机械臂底座ip和控制器ip不能在同一域名下
 - 机械臂底座连接模式下
@@ -172,8 +206,13 @@ Installing via a Debian package simplifies the process compared to building from
     + `控制器ip`: 192.168.1.10     
     + `本机ip`: 192.168.1.6
 
+### 2. DESK
+在`SETTING`页面设置控制箱ip地址
+
 <img src='img/6.png'>
+
 点击apply设置
+
 <img src='img/7.png'>
 
 设置好后，拔掉和机械臂底座的网线连接，拿网线和控制器网口相连
@@ -191,7 +230,8 @@ Installing via a Debian package simplifies the process compared to building from
 
 <img src='img/10.png'>
 
-## 4. website设置
+## 3. FCI
+
 在页面中`Activate FCI`，激活后可以在`SETTINGS/System/Installed Features`看到`FCI`
 
 <div style="display: flex; justify-content: space-around; width: 80%;">
@@ -199,7 +239,7 @@ Installing via a Debian package simplifies the process compared to building from
     <img src='img/12.png'>
 </div>
 
-## 5. Control
+## 4. Control
 
 <div style="display: flex; justify-content: space-around; width: 80%;">
   <img src="img/13.png">

@@ -18,7 +18,7 @@ sudo apt upgrade
 
 ## 2. install the necessary dependencies:
 ```
-sudo apt-get install build-essential bc curl debhelper dpkg-dev devscripts fakeroot libssl-dev libelf-dev bison flex cpio kmod rsync libncurses-dev
+sudo apt-get install build-essential bc curl debhelper dpkg-dev devscripts fakeroot libssl-dev libelf-dev bison flex cpio kmod rsync libncurses-dev dh-exec 
 ```
 output
 
